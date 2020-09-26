@@ -120,6 +120,7 @@ n_massa = 2
 fig = plt.figure()
 plt.plot(trajectory[:,n_massa,0],trajectory[:,n_massa,1])
 plt.savefig('traj_2.png')
+
 plt.show()
 
 
