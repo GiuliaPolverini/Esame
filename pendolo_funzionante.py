@@ -1,8 +1,5 @@
-import matplotlib
-matplotlib.use('Qt4Agg') # 'tkAgg' if Qt not present
 import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.animation as animation
 
 class Pendulum:
     def __init__(self, theta1, theta2, dt, length = 1.0):
@@ -58,81 +55,68 @@ class Pendulum:
         self.trajectory.append(new_position)
         return new_position
 
-class Animator:
-    def __init__(self, pendulum, draw_trace=False):
-        self.pendulum = pendulum
-        self.draw_trace = draw_trace
-        self.time = 0.0
+#%%
 
-        # set up the figure
-        self.fig, self.ax = plt.subplots()
-        self.ax.set_ylim(-2.5, 2.5)
-        self.ax.set_xlim(-2.5, 2.5)
-
-        # prepare a text window for the timer
-        self.time_text = self.ax.text(0.05, 0.95, '',
-                                      horizontalalignment='left',
-                                      verticalalignment='top',
-                                      transform=self.ax.transAxes)
-
-        # initialize by plotting the last position of the trajectory
-        self.line, = self.ax.plot(self.pendulum.trajectory[-1][:, 0],
-                                  self.pendulum.trajectory[-1][:, 1],
-                                  marker='o')
-
-        # trace the whole trajectory of the second pendulum mass
-        if self.draw_trace:
-            self.trace, = self.ax.plot([a[2, 0] for a in self.pendulum.trajectory],
-                                       [a[2, 1] for a in self.pendulum.trajectory])
-
-    def advance_time_step(self):
-        while True:
-            self.time += self.pendulum.dt
-            yield self.pendulum.evolve()
-
-    def update(self, data):
-        self.time_text.set_text('Elapsed time: {:6.2f} s'.format(self.time))
-
-        self.line.set_ydata(data[:, 1])
-        self.line.set_xdata(data[:, 0])
-
-        if self.draw_trace:
-            self.trace.set_xdata([a[2, 0] for a in self.pendulum.trajectory])
-            self.trace.set_ydata([a[2, 1] for a in self.pendulum.trajectory])
-        return self.line,
-
-    def animate(self):
-        self.animation = animation.FuncAnimation(self.fig, self.update,
-                         self.advance_time_step, interval=25, blit=False)
-
-pendulum = Pendulum(theta1=np.pi, theta2=np.pi/2-0.01, dt=0.01)
-len(pendulum.trajectory)
-
-for i in range(0,999):
+pendulum = Pendulum(theta1=np.pi, theta2=np.pi/2, dt=0.01)
+#%%
+n_evolution = 999
+for i in range(0, n_evolution):
     pendulum.evolve()
 
-len(pendulum.trajectory)
-
+#conversione di una lista di np.array in 2d in un unico np.array a 3d
 trajectory = np.asarray(pendulum.trajectory)
-trajectory.shape
-
-n_massa = 2
-fig = plt.figure()
-plt.plot(trajectory[:,n_massa,0],trajectory[:,n_massa,1])
-plt.savefig('traj_2.png')
-
-plt.show()
-
-
-
-
-
 
 #1 dim: istante della traiettoria
 #2 dim: 0: perno, 1:massa di mezzo, 2:estremità
 #3 dim: 0: x, 1:y
 
-#%%-----------------------------------
-# animator = Animator(pendulum=pendulum, draw_trace=True)
-# animator.animate()
-# plt.show()
+#%%
+#Codice per plottare gli andamenti delle 2 masse (insieme)
+fig = plt.figure()
+
+for mass in [1, 2]:
+    plt.plot(trajectory[:,mass,0], 
+             trajectory[:,mass,1])
+    
+#plt.savefig('Esame/2masses.png')
+#%%
+pendulum2 = Pendulum(theta1=np.pi, theta2=np.pi/2 - 0.01, dt=0.01)
+pendulum3 = Pendulum(theta1=np.pi, theta2=np.pi/2 - 0.02, dt=0.01)
+for i in range(0, n_evolution):
+    pendulum2.evolve()
+    pendulum3.evolve()
+    
+trajectory2 = np.asarray(pendulum2.trajectory)
+trajectory3 = np.asarray(pendulum3.trajectory)
+mass = 2
+
+
+plt.plot(trajectory[:, mass, 0],
+         trajectory[:, mass, 1])
+plt.plot(trajectory2[:, mass, 0],
+         trajectory2[:, mass, 1])
+plt.plot(trajectory3[:, mass, 0],
+         trajectory3[:, mass, 1])
+#%%
+
+delta_t2 = np.linspace(0, 0.99, 100)
+traj_list = []
+
+for d in delta_t2:
+    pend = Pendulum(theta1 = np.pi, theta2 = np.pi/2 - d, dt = 0.01)
+
+    for i in range(0, n_evolution):
+        pend.evolve()
+    traj = np.asarray(pend.trajectory)
+    traj_list.append(traj[:, mass, :])
+    
+for traj in traj_list:
+    plt.plot(traj[:,0],traj[:,1])
+    
+
+
+
+
+
+
+
