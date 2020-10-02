@@ -58,17 +58,24 @@ class Pendulum:
 #%%
 
 pendulum = Pendulum(theta1=np.pi, theta2=np.pi/2, dt=0.01)
-#%%
+
 n_evolution = 999
+
+#sviluppo moto singolo pendolo
 for i in range(0, n_evolution):
     pendulum.evolve()
 
 #conversione di una lista di np.array in 2d in un unico np.array a 3d
-trajectory = np.asarray(pendulum.trajectory)
+traj_tensor = np.asarray(pendulum.trajectory)
 
 #1 dim: istante della traiettoria
 #2 dim: 0: perno, 1:massa di mezzo, 2:estremità
 #3 dim: 0: x, 1:y
+
+#%%
+#sottocampionamento della traiettoria prendendo i dispari
+odd_index = range(1, 999, 2) # [1, 3, 5,..., 999]
+sub_sampled_traj = traj_tensor[odd_index,:,:]
 
 #%%
 #Codice per plottare gli andamenti delle 2 masse (insieme)
@@ -101,18 +108,25 @@ plt.plot(trajectory3[:, mass, 0],
 
 delta_t2 = np.linspace(0, 0.99, 100)
 traj_list = []
+mass = 2
 
 for d in delta_t2:
     pend = Pendulum(theta1 = np.pi, theta2 = np.pi/2 - d, dt = 0.01)
-
+    
+    #per ognuno dei 100 pendoli "creati sopra" si fanno 1000 evoluzioni
     for i in range(0, n_evolution):
         pend.evolve()
-    traj = np.asarray(pend.trajectory)
-    traj_list.append(traj[:, mass, :])
     
+    traj = np.asarray(pend.trajectory) #conversione
+    traj_mass2 = traj[:, mass, :] #slicing 2°massa
+    traj_list.append(traj_mass2) #salvataggio
+
 for traj in traj_list:
     plt.plot(traj[:,0],traj[:,1])
     
+#%%
+
+
 
 
 
