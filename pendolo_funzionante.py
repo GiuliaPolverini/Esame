@@ -126,10 +126,29 @@ for traj in traj_list:
     
 #%%
 
+import pandas as pd
+single_t = traj_list[3]
+df_single_t = pd.DataFrame(data=single_t, columns=['x','y'])
+evolutions = list(range(0, 1000))
 
+df_single_t['evolution'] = evolutions
 
+df_single_t['distance'] = np.sqrt(np.square(df_single_t['x']) + 
+                                  np.square(df_single_t['y']))
 
+#%%
 
+import pandas as pd
+df_traj = pd.DataFrame() # columns = ['evolution', 'x', 'y', 'pend']
+evolutions = list(range(0, 1000))
+
+ 
+
+for i,traj in enumerate(traj_list):
+    df_t = pd.DataFrame(data=traj, columns=['x','y'])
+    df_t['evolution'] = evolutions
+    df_t['pend'] = [i] * 1000
+    df_traj = df_traj.append(df_t)
 
 
 
