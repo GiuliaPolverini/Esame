@@ -137,7 +137,6 @@ df_single_t['distance'] = np.sqrt(np.square(df_single_t['x']) +
                                   np.square(df_single_t['y']))
 
 #%%
-
 import pandas as pd
 df_traj = pd.DataFrame() # columns = ['evolution', 'x', 'y', 'pend']
 evolutions = list(range(0, 1000))
