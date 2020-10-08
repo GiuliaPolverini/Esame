@@ -6,6 +6,7 @@ Created on Thu Oct  8 12:28:56 2020
 """
 
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import numpy as np
 
 class Pendulum:
@@ -60,7 +61,7 @@ class Pendulum:
 
         new_position = self.polar_to_cartesian()
         self.trajectory.append(new_position)
-        return new_
+        return new_position
 class Animator:
     def __init__(self, pendulum, draw_trace = False):
         self.pendulum = pendulum
@@ -109,7 +110,7 @@ class Animator:
         self.animation = animation.FuncAnimation(self.fig, self.update,
                          self.advance_time_step, interval=25, blit=False)
         
-pendulum = Pendulum(theta1=np.pi, theta2=np.pi-0.01, dt=0.01)
+pendulum = Pendulum(theta1=np.pi, theta2=np.pi-0.05, dt=0.01)
 animator = Animator(pendulum=pendulum, draw_trace=True)
 animator.animate()
 plt.show()
