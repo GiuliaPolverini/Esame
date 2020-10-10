@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Oct  8 16:45:36 2020
+Created on Sat Oct 10 15:25:26 2020
 
 @author: Giulia
 """
@@ -85,9 +85,12 @@ class Animator:
                                   self.pendulum.trajectory[-1][:, 1], 
                                   marker = 'o')
          
-        # trace the whole trajectory of the second pendulum mass
+        # trace the whole trajectory of the pendulum masses
         if self.draw_trace:
-            self.trace, = self.ax.plot(
+            self.trace1, = self.ax.plot(
+                            [a[1, 0] for a in self.pendulum.trajectory],
+              	            [a[1, 1] for a in self.pendulum.trajectory])
+            self.trace2, = self.ax.plot(
                             [a[2, 0] for a in self.pendulum.trajectory],
               	            [a[2, 1] for a in self.pendulum.trajectory])
 
@@ -103,15 +106,18 @@ class Animator:
         self.line.set_xdata(data[:, 0])
          
         if self.draw_trace:
-            self.trace.set_xdata([a[2, 0] for a in self.pendulum.trajectory])
-            self.trace.set_ydata([a[2, 1] for a in self.pendulum.trajectory])
+            self.trace1.set_xdata([a[1, 0] for a in self.pendulum.trajectory])
+            self.trace1.set_ydata([a[1, 1] for a in self.pendulum.trajectory])
+
+            self.trace2.set_xdata([a[2, 0] for a in self.pendulum.trajectory])
+            self.trace2.set_ydata([a[2, 1] for a in self.pendulum.trajectory])
         return self.line,
 
     def animate(self):
         self.animation = animation.FuncAnimation(self.fig, self.update,
                          self.advance_time_step, interval=25, blit=False)
 
-pendulum = Pendulum(theta1=np.pi, theta2=np.pi-0.05, dt=0.02)
+pendulum = Pendulum(theta1=np.pi, theta2=np.pi-0.001, dt=0.02)
 animator = Animator(pendulum=pendulum, draw_trace=True)
 animator.animate()
 plt.show()
