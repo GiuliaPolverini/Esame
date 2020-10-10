@@ -105,7 +105,7 @@ class Animator:
                 yield self.pendulum.evolve()
 
     def update(self, data):
-        self.time_text.set_text('Elapsed time: {:.2f} s'.format(self.time))
+        self.time_text.set_text('Elapsed time: {:6.2f} s'.format(self.time))
 
         self.line.set_ydata(data[:, 1])
         self.line.set_xdata(data[:, 0])
@@ -116,12 +116,13 @@ class Animator:
 
             self.trace2.set_xdata([a[2, 0] for a in self.pendulum.trajectory])#lista di posizioni x della pallina 2 lungo tutta la traj
             self.trace2.set_ydata([a[2, 1] for a in self.pendulum.trajectory])#lista di posizioni y della pallina 2 lungo tutta la traj
-
+        return self.line,
+    
     def animate(self, end_time = None):
         self.animation = animation.FuncAnimation(fig=self.fig, func=self.update,
                          frames=self.advance_time_step(end_time), interval=25, blit=False)
 
 pendulum = Pendulum(theta1=np.pi, theta2=np.pi-0.05, dt=0.02)
 animator = Animator(pendulum=pendulum, draw_trace=True)
-
+animator.animate()
 plt.show()
