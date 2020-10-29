@@ -6,6 +6,6 @@
     },
 
 "anim":
-    {"draw_trace" : 0
+    {"draw_trace" : 1
     }
 }
