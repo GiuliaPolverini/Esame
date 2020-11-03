@@ -31,7 +31,7 @@ class Animator: # tutto ciò che concerne l'animazione
 
             self.bound = 0.2 #boundary percentage: serve per il plot, insieme 
             # al pezzo sotto adatta lo spazio della rappresentazione alla 
-            # lunghezza + il 20%
+            # lunghezza del pendolo + il 20%
 
             x2_extr = np.asarray([np.min(self.x2), np.max(self.x2)]) * (1 + self.bound)
             y2_extr = np.asarray([np.min(self.y2), np.max(self.y2)]) * (1 + self.bound)
@@ -77,7 +77,7 @@ class Animator: # tutto ciò che concerne l'animazione
         # mette nelle graffe in cui dico che voglio al max 6 cifre davanti alla
         # virgola, al max 2 dopo, ed è un numero float
         # Do n perché lui sa che sto facendo l'n-esima iterazione (lo sa da 
-        #range) e visto che l'iterazione è fatta a tempi regolari allora il 
+        # range) e visto che l'iterazione è fatta a tempi regolari allora il 
         # tempo simulato è n*dt
 
         # self.time_text.set_text('Frame: {} '.format(n))

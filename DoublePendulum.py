@@ -23,7 +23,7 @@ pend_sim = PendulumSimulation(**config['pend']) # "key = value" per tutti gli
                                                 # elementi del dizionario
 pend_sim.simulate() # simulazione vera e propria
 
-#pendulum animation <-- questo è come voglio terminare il programma
+#pendulum animation
 anim = Animator(pend_sim, **config['anim'])
 anim.animate()
 plt.show()

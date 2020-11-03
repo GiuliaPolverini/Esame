@@ -27,8 +27,8 @@ class PendulumSimulation:
         self.motion = None # la inizializzo vuota, la riempio sotto quando
                            # chiamo simulate
         
-        # ho tutto quello che serve a Odeint per funzionare: time time_end,
-        # stato iniziale state0 e parametro l
+        # ho tutto quello che serve a Odeint per funzionare: time (time_end),
+        # stato iniziale (state0) e almeno un parametro (l)
 
     def Pendulum_model(self, state, time, l):
         '''
@@ -40,10 +40,10 @@ class PendulumSimulation:
             state: stato iniziale del sistema
             time : campionamento temporale su cui fare la simulazione
                    ~ np.linspace(0,10, 2**9+1)
-            l    : lunghezza delle sbarre del pendolo. Nell'approssimazione in cui l1 = l2.
+            l: lunghezza delle sbarre del pendolo. Nell'approssimazione in cui l1=l2.
 
         return:
-            δa1, δa2, δp1, δp2: variazioni infinitesime delle 4 variabili del sistema.
+            δα1, δα2, δp1, δp2: variazioni infinitesime delle 4 variabili del sistema.
         '''
         
         α1, α2, p1, p2 = state
