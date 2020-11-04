@@ -10,42 +10,47 @@ from scipy.integrate import odeint # package for ODE integration
 class PendulumSimulation:
     '''
     Classe per la simulazione del sistema fisico del doppio pendolo...
-    Qui si pone il problema
     '''
     def __init__(self, state0, time_end, exp_time_sampling = 11, l = 1):
         '''
         Classe per la simulazione del sistema fisico del doppio pendolo...
         '''
-        self.time = np.linspace(0.0, time_end, 2**exp_time_sampling + 1)
-        # campionamento sul tempo (=quanti istanti ci sono tra 0 e time_end;
-        # faccio il campionamento chiedendo un numero che ha una potenza di 2
-        # di 2 punti --> facendo la divisione per 2 ho risultati perfetti,
-        # no errori macchina)
-        self.dt = self.time[1] - self.time[0] # calcolo il dt per Animator
-        self.l = l
-        self.state0 = state0
-        self.motion = None # la inizializzo vuota, la riempio sotto quando
-                           # chiamo simulate
-        
-        # ho tutto quello che serve a Odeint per funzionare: time (time_end),
-        # stato iniziale (state0) e almeno un parametro (l)
 
-    def Pendulum_model(self, state, time, l):
-        '''
-        descrizione:
-        Funzione per fare la derivata del sistema....
-        Qui si va a risolvere il problema
+        if time_end <= 0:
+            raise ValueError('Value Error: `time_end` should be greater than 0.')
+        elif exp_time_sampling < 0:
+            raise ValueError('Value Error: `exp_time_sampling` should be greater than 0.')
+        else:
+            self.time = np.linspace(0.0, time_end, 2**exp_time_sampling+1)
+
+        self.dt = self.time[1] - self.time[0]
+        self.state0 = state0
+        self.integrate = None
+
+        if l > 0:
+            self.l = l
+        else:
+            raise ValueError('Value Error: l should be greater than 0.')
+
+    def simulate(self):
+        self.integrate = odeint(self._pendulum_model, y0=self.state0, t=self.time, args=(self.l,))
+        self.x1, self.y1, self.x2, self.y2 = self._cartesian_traj(self.integrate)
+
+
+    def _pendulum_model(self, state, time, l):
+        ''' (ESEMPIO DI DOCUMENTAZIONE)
+        (descrizione) Funzione per la derivata del sistema....
 
         parametrs:
             state: stato iniziale del sistema
             time : campionamento temporale su cui fare la simulazione
                    ~ np.linspace(0,10, 2**9+1)
-            l: lunghezza delle sbarre del pendolo. Nell'approssimazione in cui l1=l2.
+            l    : lunghezza delle sbarre del pendolo. Nell'approssimazione in cui l1 = l2.
 
         return:
             δα1, δα2, δp1, δp2: variazioni infinitesime delle 4 variabili del sistema.
         '''
-        
+
         α1, α2, p1, p2 = state
         g = 9.81
 
@@ -63,22 +68,31 @@ class PendulumSimulation:
 
         return δα1, δα2, δp1, δp2
 
-    # metodo che risolve effettivam il moto (non avrò un moto finché non simulo)
-    def simulate(self):
-        self.motion = odeint(self.Pendulum_model, y0 = self.state0,
-                             t = self.time, args = (self.l,))
-        # risultato di OdeInt (soluzione numerica dell'integraz delle eq.diff)
-        self.cartesian_traj()
 
-    def cartesian_traj(self):
+    def _cartesian_traj(self, integrate):
         '''
-        Function for the conversion to cartesian coordinate of the series of 
-        values in 'self.motion'.
-        Non ha parametri in ingresso nè un return
+        Function for the conversion to cartesian coordinate of the series of values in 'self.integrate'.
+
+        integrate deve essere un qualsiasi moto risolto con le 4 variabili: a1_hat, a2_hat, p1_hat, p2_hat
+
         '''
-        α1_hat, α2_hat, p1_hat, p2_hat = self.motion.T
-        
-        self.x1 =  self.l * np.sin(α1_hat)
-        self.y1 = -self.l * np.cos(α1_hat)
-        self.x2 = self.x1 + self.l * np.sin(α2_hat)
-        self.y2 = self.y1 - self.l * np.cos(α2_hat)
+        α1_hat, α2_hat, p1_hat, p2_hat = integrate.T
+        x1 =  self.l * np.sin(α1_hat)
+        y1 = -self.l * np.cos(α1_hat)
+        x2 = x1 + self.l * np.sin(α2_hat)
+        y2 = y1 - self.l * np.cos(α2_hat)
+
+        return x1, y1, x2, y2
+
+def test_init():
+    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
+    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)
+    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=2)
+
+def test_cartesian_traj():
+    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
+
+    for lenght in [200, 300, 0]:
+        integrate = np.ones((lenght,4))
+        a1, a2, a3, a4 = pend_sim._cartesian_traj(integrate)
+        assert integrate.shape[0] == a1.shape[0]
