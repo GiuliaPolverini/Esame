@@ -12,8 +12,9 @@ This means that the system is described by a set of four first order differentia
 ![equation9](https://latex.codecogs.com/gif.latex?\dot{p_2}&space;=&space;-gsin(\theta_2)&space;+&space;A&space;-&space;B)
 
 where
+
 ![equation10](https://latex.codecogs.com/gif.latex?A&space;=&space;\frac{p_1p_2sin(\theta_1&space;-&space;\theta_2)}{1&space;+&space;sin^2(\theta_1&space;-&space;\theta_2)})
-and
+
 ![equation11](https://latex.codecogs.com/gif.latex?B&space;=&space;\frac{p_1^2&space;+&space;2p_2^2&space;-&space;p_1p_2cos(\theta_1&space;-&space;\theta_2)}{2[1&space;+&space;sin^2(\theta_1&space;-&space;\theta_2)]^2}sin[2(\theta_1&space;-&space;\theta_2)])
 
 
