@@ -51,22 +51,22 @@ class PendulumSimulation:
             δα1, δα2, δp1, δp2: variazioni infinitesime delle 4 variabili del sistema.
         '''
 
-        α1, α2, p1, p2 = state
+        θ1, θ2, p1, p2 = state 
         g = 9.81
 
-        expr1 = np.cos(α1 - α2)
-        expr2 = np.sin(α1 - α2)
+        expr1 = np.cos(θ1 - θ2)
+        expr2 = np.sin(θ1 - θ2)
         expr3 = (1 + expr2**2)
         expr4 = p1 * p2 * expr2 / expr3
-        expr5 = (p1**2 + 2 * p2**2 - p1 * p2 * expr1) * np.sin(2 * (α1 - α2)) / (2 * expr3**2)
+        expr5 = (p1**2 + 2 * p2**2 - p1 * p2 * expr1) * np.sin(2 * (θ1 - θ2)) / (2 * expr3**2)
         expr6 = expr4 - expr5
 
-        δα1 = (1 * p1 - p2 * expr1) / expr3
-        δα2 = (2 * p2 - p1 * expr1) / expr3
-        δp1 = (-2 * g * l * np.sin(α1) - expr6)
-        δp2 = (-1 * g * l * np.sin(α2) + expr6)
+        δθ1 = (1 * p1 - p2 * expr1) / expr3
+        δθ2 = (2 * p2 - p1 * expr1) / expr3
+        δp1 = (-2 * g * l * np.sin(θ1) - expr6)
+        δp2 = (-1 * g * l * np.sin(θ2) + expr6)
 
-        return δα1, δα2, δp1, δp2
+        return δθ1, δθ2, δp1, δp2
 
 
     def _cartesian_traj(self, integrate):
@@ -76,11 +76,11 @@ class PendulumSimulation:
         integrate deve essere un qualsiasi moto risolto con le 4 variabili: a1_hat, a2_hat, p1_hat, p2_hat
 
         '''
-        α1_hat, α2_hat, p1_hat, p2_hat = integrate.T
-        x1 =  self.l * np.sin(α1_hat)
-        y1 = -self.l * np.cos(α1_hat)
-        x2 = x1 + self.l * np.sin(α2_hat)
-        y2 = y1 - self.l * np.cos(α2_hat)
+        θ1_hat, θ2_hat, p1_hat, p2_hat = integrate.T
+        x1 =  self.l * np.sin(θ1_hat)
+        y1 = -self.l * np.cos(θ1_hat)
+        x2 = x1 + self.l * np.sin(θ2_hat)
+        y2 = y1 - self.l * np.cos(θ2_hat)
 
         return x1, y1, x2, y2
 
