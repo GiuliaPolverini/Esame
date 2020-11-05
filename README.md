@@ -3,6 +3,7 @@
 ![nome_immagine](https://physicspython.files.wordpress.com/2019/02/double_pendulum-e1549896953882.png?w=600)
 
 The double pendulum is a classical exercise of classical mechanics. I made the approximation that each pendulum consists of a point mass ![equation1](https://latex.codecogs.com/gif.latex?m) hanging on an ideal (non-elastic, mass-less) string of length ![equation2](https://latex.codecogs.com/gif.latex?l) in a constant, homogeneous  gravitational field of acceleration ![equation3](https://latex.codecogs.com/gif.latex?g). While the first pendulum is attached to a rigid, motionless point, the second is attached to the point mass of the first one,  drawing a chaotic trajectory. Moreover, I assumed that the motion only happens in a single plane, so that each pendulum is attached by a rigid string to a specific point, and to greatly semplify the equation I set ![equation4](https://latex.codecogs.com/gif.latex?m_{1}&space;=&space;m_{2}&space;=&space;1) and ![equation5](https://latex.codecogs.com/gif.latex?l_{1}&space;=&space;l_{2}&space;=&space;1.)
+
 This means that the system is described by a set of four first order differential equations, two for each degree of freedom:
 
 ![equation6](https://latex.codecogs.com/gif.latex?\dot{\theta_1}&space;=&space;\frac{p_1&space;-&space;p_2cos(\theta_1&space;-&space;\theta_2)}{1&space;+&space;sin^2(\theta_1&space;-&space;\theta_2)})
@@ -23,9 +24,9 @@ where
 ### Structure of the project
 These are the steps in order to start the program and get the animation:
 
-1) The user has to choose the configurations he/she prefers, using the syntax of [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json); in particular, the user has to specify the two angles and the two angular momenta for both the systems ...
-2) ...
-3) ...
+1) First the user has to choose the configurations he/she prefers, using the syntax of [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json); in particular, the user has to specify the two angles and the two angular momenta for both the systems ...
+2) Then to make the simulation run the user has to FILE DOUBLEPEND
+3) At the end ...
 
 This is how I divided my project into blocks:
 
@@ -37,6 +38,9 @@ This is how I divided my project into blocks:
 
 - In the file [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) there are the parameters the user can vary according to COME LA VUOLE VEDERE!
 
+This is how the animation looks like after 9,72 seconds:
+
+![ScreenShot](Screenshot.png)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 {ising: I have built the Ising functions that calculate energy and magnetization of the system, and save them in arrays in order to use them for further data analysis. In addition, for a given temperature there is a function that calculates the different states of a lattice during time, from disordered state to ordered state.}
