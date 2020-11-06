@@ -1,6 +1,7 @@
 # Esame
 ### The Double Pendulum
 ![nome_immagine](https://physicspython.files.wordpress.com/2019/02/double_pendulum-e1549896953882.png?w=600)
+
 The double pendulum is a classical exercise of mechanics. Consider the approximation that each pendulum consists of a point mass ![equation1](https://latex.codecogs.com/gif.latex?m) hanging on an ideal (non-elastic, mass-less) string of length ![equation2](https://latex.codecogs.com/gif.latex?l) in a constant, homogeneous  gravitational field of acceleration ![equation3](https://latex.codecogs.com/gif.latex?g). While the first pendulum is attached to a rigid, motionless point, the second is attached to the point mass of the first one,  drawing a chaotic trajectory. Moreover, the motion here only happens in a single plane, so that each pendulum is attached by a rigid string to a specific point, and to greatly semplify the equation I assumed that ![equation4](https://latex.codecogs.com/gif.latex?m_{1}&space;=&space;m_{2}&space;=&space;1) and ![equation5](https://latex.codecogs.com/gif.latex?l_{1}&space;=&space;l_{2}&space;=&space;1.)
 
 This means that the system is described by a set of four first order differential equations, two for each degree of freedom:
