@@ -1,8 +1,7 @@
 # Esame
 ### The Double Pendulum
 ![nome_immagine](https://physicspython.files.wordpress.com/2019/02/double_pendulum-e1549896953882.png?w=600)
-
-The double pendulum is a classical exercise of classical mechanics. I made the approximation that each pendulum consists of a point mass ![equation1](https://latex.codecogs.com/gif.latex?m) hanging on an ideal (non-elastic, mass-less) string of length ![equation2](https://latex.codecogs.com/gif.latex?l) in a constant, homogeneous  gravitational field of acceleration ![equation3](https://latex.codecogs.com/gif.latex?g). While the first pendulum is attached to a rigid, motionless point, the second is attached to the point mass of the first one,  drawing a chaotic trajectory. Moreover, I assumed that the motion only happens in a single plane, so that each pendulum is attached by a rigid string to a specific point, and to greatly semplify the equation I set ![equation4](https://latex.codecogs.com/gif.latex?m_{1}&space;=&space;m_{2}&space;=&space;1) and ![equation5](https://latex.codecogs.com/gif.latex?l_{1}&space;=&space;l_{2}&space;=&space;1.)
+The double pendulum is a classical exercise of mechanics. Consider the approximation that each pendulum consists of a point mass ![equation1](https://latex.codecogs.com/gif.latex?m) hanging on an ideal (non-elastic, mass-less) string of length ![equation2](https://latex.codecogs.com/gif.latex?l) in a constant, homogeneous  gravitational field of acceleration ![equation3](https://latex.codecogs.com/gif.latex?g). While the first pendulum is attached to a rigid, motionless point, the second is attached to the point mass of the first one,  drawing a chaotic trajectory. Moreover, the motion here only happens in a single plane, so that each pendulum is attached by a rigid string to a specific point, and to greatly semplify the equation I assumed that ![equation4](https://latex.codecogs.com/gif.latex?m_{1}&space;=&space;m_{2}&space;=&space;1) and ![equation5](https://latex.codecogs.com/gif.latex?l_{1}&space;=&space;l_{2}&space;=&space;1.)
 
 This means that the system is described by a set of four first order differential equations, two for each degree of freedom:
 
@@ -24,29 +23,19 @@ where
 ### Structure of the project
 These are the steps in order to start the program and get the animation:
 
-1) First the user has to choose the configurations he/she prefers, using the syntax of [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json); in particular, the user has to specify the two angles and the two angular momenta for both the systems ...
+1) First the user has to choose the configurations he/she prefers, using the syntax of [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json);
 2) Then to make the simulation run the user has to FILE DOUBLEPEND
 3) At the end ...
 
 This is how I divided my project into blocks:
 
-- In the file [PendulumSimulation](https://github.com/GiuliaPolverini/Esame/blob/master/PendulumSimulation.py) I have built the ...
+- In the file [PendulumSimulation](https://github.com/GiuliaPolverini/Esame/blob/master/PendulumSimulation.py) I have initialized some parameters as the initial state of the system and the time, solved the differential equations for the system thanks to the odeint package and got the cartesian coordinates for each position; in the last part I tested ....
 
-- In the file [Animator](https://github.com/GiuliaPolverini/Esame/blob/master/Animator.py) ...
+- In the file [Animator](https://github.com/GiuliaPolverini/Esame/blob/master/Animator.py) I have set the length of time for the simulation, the size of the animation window and of the plot and how the text window has to evolve; then I have built the line of the pendulum with its three points (the central pin and the two masses), inizializing their positions and the trace to draw the trajectory; at the end I created a cycle to iterate the frames and update the positions and the traces.
 
-- In the fine [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py) ...
+- In the file [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) there are the parameters the user can vary according to how he/she wants them.
 
-- In the file [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) there are the parameters the user can vary according to COME LA VUOLE VEDERE!
+- In the file [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py) first I have brought out the values I needed from the [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) file to create the system; then I have given the comand to create the simulation and the animation.
 
 This is how the animation looks like after 9,72 seconds:
-
 ![ScreenShot](Screenshot.png)
-
-----------------------------------------------------------------------------------------------------------------------------------------------------
-{ising: I have built the Ising functions that calculate energy and magnetization of the system, and save them in arrays in order to use them for further data analysis. In addition, for a given temperature there is a function that calculates the different states of a lattice during time, from disordered state to ordered state.}
-
-{testing: I have tested all the Ising functions to ensure that all of them work properly, using hypothesis testing.}
-
-{configuration: there are all the definitions of the parameters used in the simulation file, as number of spins per lattice (N*M), temperature intervals and so on. Furthermore, there are the local paths in order to load the array data and to save them as images and graphs. It's a .txt file that is imported in simulation file.}
-
-{simulation: there is the main part of the code, where I have used the functions of ising file in order to calculate the energy and the magnetization of a configuration of spins for a range of temperatures across the critical one ***T<sub>c***, showing a steeply decrease in energy from high temperatures to low ones and a rapidly increase in magnetization, a clear sign of a phase transition. In addition there is the calculation of the different states of the configuration of spins for a given temperatrue, lower than ***T<sub>c***, respect to time, which shows that the system coarsens toward the configuration of all spins aligned; then I saved these states in an array to process them in further data analysis.}
