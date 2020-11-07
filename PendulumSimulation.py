@@ -14,7 +14,7 @@ class PendulumSimulation:
         # testing for the length of the simulation
         if time_end <= 0:
             raise ValueError('Value Error: `time_end` must be > 0.')
-        # testing for the sampling pf the simulation
+        # testing for the sampling of the simulation
         elif exp_time_sampling < 0:
             raise ValueError('Value Error: `exp_time_sampling` must be >= 0.')
         else:
@@ -53,7 +53,7 @@ class PendulumSimulation:
 
         Returns
         -------
-        δθ1,  δθ2,  δp1,  δp2 : infinitesimal variations of the 4 variables of the system
+        δθ1, δθ2, δp1, δp2 : infinitesimal variations of the 4 variables of the system
         
         '''
 
@@ -77,37 +77,28 @@ class PendulumSimulation:
 
     def _cartesian_traj(self, integrate):
         '''
-        Function for the conversion to cartesian coordinate of the series of values in 'self.integrate'.
+        Function for the conversion to cartesian coordinate of the series of 
+        values in 'self.integrate'.
+        It modifies the state of the variables, building new attributes
+       
+        Parameters
+        ----------
+        integrate : 
 
-        integrate deve essere un qualsiasi moto risolto con le 4 variabili: θ1_hat, θ2_hat, p1_hat, p2_hat
+        Returns
+        -------
+        x1, y1, x2, y2 : converted variables
         
-        così l'ho trasformata in una funzione pura perché anziché creare soltanto
-        delle variabili mi dà qualcosa in return'
-        
-        Modifica lo stato delle variabili creando nuovi attributi
-        
-        
-        Questa funzione prende integrate, lo traspone, fa la conversione e 
-        restituisce le variabili convertite
-        
-        Per come è stata riscritta crea 4 serie di valori che io decido come 
-        salvare, quindi lascia molta più libertà
-        
-        Quindi le funzioni pure sono indipendenti e io le devo usare nel momento
-        giusto, mentre quella precedente era vincolata, anche ad essere usata 
-        solo in quel punto
-    
         '''
-        θ1_hat, θ2_hat, p1_hat, p2_hat = integrate.T # prende integrate in input
+        
+        θ1_hat, θ2_hat, p1_hat, p2_hat = integrate.T
         x1 =  self.l * np.sin(θ1_hat)
         y1 = -self.l * np.cos(θ1_hat)
         x2 = x1 + self.l * np.sin(θ2_hat)
         y2 = y1 - self.l * np.cos(θ2_hat)
 
-        return x1, y1, x2, y2 # e restituisce questa tupla di valori senza
-                              # modificare lo stato della simulazione
-    # integrate
-
+        return x1, y1, x2, y2 
+    
 def test_init():
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)

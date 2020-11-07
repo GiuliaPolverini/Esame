@@ -14,7 +14,7 @@ class Animator:
     def __init__(self, pend_simulation, draw_trace = False):
         # to draw the trajectories of the masses
         self.draw_trace = draw_trace
-        # lenght of the simulation (in sec) get by doing the difference between
+        # lenght of the simulation (in sec) got by doing the difference between
         # two following instants in PendulumSimulation
         self.dt = pend_simulation.dt
       
@@ -61,7 +61,7 @@ class Animator:
     def update(self, n):
         '''
         This function makes the text evolve: as the iteration is done for 
-        regular time so the time of simulation is given by n*dt.
+        regular time, the time of simulation is given by n*dt.
         
         It's a grafical function.
 
@@ -71,8 +71,8 @@ class Animator:
 
         '''
         # fill the text window with following iterations
-        # the elapsed time must have at most six digits before comma, at most
-        # two digits after comma, and it's a float number
+        # (the elapsed time must have at most six digits before comma, at most
+        # two digits after comma, and it's a float number)
         self.time_text.set_text('Elapsed time: {:6.2f} s'.format(n * self.dt))
 
         # overwriting of each position for both the pendulums
