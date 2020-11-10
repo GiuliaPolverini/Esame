@@ -6,6 +6,7 @@
     },
 
 "anim":
-    {"draw_trace": 1
+    {"draw_trace": 1,
+    "n_frames": 1000
     }
 }

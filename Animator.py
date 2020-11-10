@@ -8,14 +8,26 @@ import numpy as np
 import matplotlib.pylab as plt
 import matplotlib.animation as animation
 
-# class about the settings for the animation window 
+# class to create the animation
 class Animator:
     
-    def __init__(self, pend_simulation, draw_trace = False):
-        # to draw the trajectories of the masses
+    def __init__(self, pend_simulation, n_frames, draw_trace = False):
+        
+        '''
+        Parameters
+        ----------
+        pend_simulation : simulazione che devo andare ad animare
+        n_frames :
+        draw_trace : boolean variable to draw the trajectory of the masses
+
+        Returns
+        -------
+        None.
+
+        '''
+        self.n_frames = n_frames
         self.draw_trace = draw_trace
-        # lenght of the simulation (in sec) got by doing the difference between
-        # two following instants in PendulumSimulation
+        # size of the temporal sampling
         self.dt = pend_simulation.dt
       
         # testing the integration
@@ -36,17 +48,17 @@ class Animator:
            
             # set up the figure
             self.fig, self.ax = plt.subplots(figsize = (8,8))
-            self.ax.set_xlim(*x2_extr) # self.ax.set_xlim(x2_extr[0], x2_extr[1])
+            self.ax.set_xlim(*x2_extr)
             self.ax.set_ylim(*y2_extr)
           
             # prepare a text window for the timer
-            self.time_text = self.ax.text(0.05, 0.95,
-                                          'Elapsed time: {:6.2f} s'.format(0.0),
+            self.time_text = self.ax.text(0.05, 0.95,'Elapsed time: {:6.2f} s'.format(0.0),
                 		                  horizontalalignment = 'left',
                 		                  verticalalignment = 'top',
                 		                  transform = self.ax.transAxes)
 
-            # initialize by plotting the first positions of the masses
+            # the body of the pendulum is initialized by plotting the first 
+            # positions of the masses
             self.line, = self.ax.plot([0.0, self.x1[0], self.x2[0]],
                                       [0.0, self.y1[0], self.y2[0]],
                                       marker = 'o')
@@ -59,27 +71,26 @@ class Animator:
                 self.trace = None
 
     def update(self, n):
-        '''
-        This function makes the text evolve: as the iteration is done for 
-        regular time, the time of simulation is given by n*dt.
         
-        It's a grafical function.
+        '''
+        This function makes the text, the line and the draw evolve, creating
+        the frames of the animation.
+        As the iteration is done for regular time, the simulation time is given by n*dt.
 
         Parameters
         ----------
-        n : index for each number of iteration
+        n : integer index for each number of iteration
 
         '''
-        # fill the text window with following iterations
-        # (the elapsed time must have at most six digits before comma, at most
-        # two digits after comma, and it's a float number)
+        
+        # update the text window 
         self.time_text.set_text('Elapsed time: {:6.2f} s'.format(n * self.dt))
 
-        # overwriting of each position for both the pendulums
+        # update of each position for both the pendulums
         self.line.set_xdata([0.0, self.x1[n], self.x2[n]])
         self.line.set_ydata([0.0, self.y1[n], self.y2[n]])
 
-        # overwriting of each trace for both the pendulums
+        # update of each trace for both the pendulums
         if self.draw_trace:
             self.trace1.set_xdata(self.x1[0: n+1])
             self.trace1.set_ydata(self.y1[0: n+1])
@@ -89,13 +100,14 @@ class Animator:
         return self.line, self.trace1, self.trace2
        
     def animate(self):
-        '''
-        This function, with FuncAnimation, generates as much frames as required
-        and then passes them to the update method
         
         '''
+        Function to call to generate the animation using FuncAnimation, from matplotlib.
+        
+        '''
+        
         # cycle that iterates the sequence of frames
         self.animation = animation.FuncAnimation(fig = self.fig,
                                                  func = self.update,
-                                                 frames = range(1000),
+                                                 frames = range(self.n_frames),
                                                  interval = 5, blit = False)

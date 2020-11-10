@@ -10,11 +10,30 @@ from scipy.integrate import odeint # package for ODE integration
 # class for the simulation of the double pendulum
 class PendulumSimulation:
     
+    '''
+    Simulation of the physical system of a double pendulum throught the integration
+    of a set of four first order differential equations, two for each degree of freedom.
+    
+    '''
+    
     def __init__(self, state0, time_end, exp_time_sampling = 11, l = 1):
-        # testing for the length of the simulation
+        
+        '''
+        Parameters
+        ----------
+        state0 : initial state of the system
+        time_end : 
+        exp_time_sampling : 
+        l : 
+
+        Returns
+        -------
+        None.
+
+        '''
+        
         if time_end <= 0:
             raise ValueError('Value Error: `time_end` must be > 0.')
-        # testing for the sampling of the simulation
         elif exp_time_sampling < 0:
             raise ValueError('Value Error: `exp_time_sampling` must be >= 0.')
         else:
@@ -23,33 +42,37 @@ class PendulumSimulation:
         # calculation of the length of the simulation
         self.dt = self.time[1] - self.time[0]
         self.state0 = state0
-        # initialization of the motion
+       
         self.integrate = None
 
-        # testing of the pendulum length
         if l > 0:
             self.l = l
         else:
             raise ValueError('Value Error: l must be > 0.')
 
     def simulate(self):
+        
         '''
-        This function ...
+        Numerical integration of the motion of the pendulum according to the
+        physical model, starting by certain initial condition 'state0', over 
+        a certain interval 'time'.
 
         '''
-        self.integrate = odeint(self._pendulum_model, y0=self.state0,
+        
+        self.integrate = odeint(self.pendulum_model, y0=self.state0,
                                 t=self.time, args=(self.l,))
-        self.x1, self.y1, self.x2, self.y2 = self._cartesian_traj(self.integrate)
+        self.x1, self.y1, self.x2, self.y2 = self.cartesian_traj(self.integrate)
 
-    def _pendulum_model(self, state, time, l):
+    def pendulum_model(self, state, time, l):
+        
         '''
-        This function makes the derivatives of the system
+        This function makes the derivatives of the system.
 
         Parameters
         ----------
         state : initial state of the system
-        time : temporal sampling su cui fare la sim
-        l : length of the pendulum in the approximation where l1 = l2
+        time : temporal sampling of the simulation
+        l : length of the pendulum, in the approximation where l1 = l2
 
         Returns
         -------
@@ -75,15 +98,14 @@ class PendulumSimulation:
         return δθ1, δθ2, δp1, δp2
 
 
-    def _cartesian_traj(self, integrate):
+    def cartesian_traj(self, integrate):
         '''
-        Function for the conversion to cartesian coordinate of the series of 
-        values in 'self.integrate'.
-        It modifies the state of the variables, building new attributes
+        Function for the conversion from angular to cartesian coordinates of 
+        the series of values in 'self.integrate'.
        
         Parameters
         ----------
-        integrate : 
+        integrate : temporal series of two angular variables and their momentums
 
         Returns
         -------
@@ -98,17 +120,3 @@ class PendulumSimulation:
         y2 = y1 - self.l * np.cos(θ2_hat)
 
         return x1, y1, x2, y2 
-    
-def test_init():
-    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
-    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)
-    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=2)
-
-def test_cartesian_traj():
-    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
-
-    for lenght in [200, 300, 0]:
-        integrate = np.ones((lenght,4))
-        a1, a2, a3, a4 = pend_sim._cartesian_traj(integrate)
-        # 4variabili perché state ha 4 valori
-        assert integrate.shape[0] == a1.shape[0]
