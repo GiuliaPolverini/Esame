@@ -37,7 +37,7 @@ This is how I divided my project into blocks:
 
 - In the file [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py) first I have brought out the values I needed from the [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) file to create the system; then I have given the comand to create the simulation and the animation.
 
-- In the file [Testing](https://github.com/GiuliaPolverini/Esame/blob/master/Testing.py) I have tested some functions to ensure that they work properly. There are not many functions to test in this case because most of them are grafical function.
+- In the file [_test](https://github.com/GiuliaPolverini/Esame/blob/master/_test.py) I have tested some functions to ensure that they work properly. There are not many functions to test in this case because most of them are grafical function.
 
 This is how the animation looks like after 9,72 seconds:
 ![ScreenShot](Screenshot.png)
