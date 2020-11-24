@@ -16,8 +16,8 @@ class Animator:
         '''
         Parameters
         ----------
-        pend_simulation : simulazione che devo andare ad animare
-        n_frames :
+        pend_simulation : simulation to animate
+        n_frames : integer variable which represents the steps of the animation
         draw_trace : boolean variable to draw the trajectory of the masses
 
         Returns

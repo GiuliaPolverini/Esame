@@ -22,9 +22,9 @@ class PendulumSimulation:
         Parameters
         ----------
         state0 : initial state of the system
-        time_end : 
-        exp_time_sampling : 
-        l : 
+        time_end : final step of the animation
+        exp_time_sampling : exponential of the time sampling
+        l : length of the body of the pendulum, in the approximation of l1 = l2
 
         Returns
         -------
