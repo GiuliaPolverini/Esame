@@ -16,7 +16,7 @@ from PendulumSimulation import PendulumSimulation
 
 # loading configuration  
 # bring out the value I need from the config file
-with open('specify_the_path') as f: #'.\Esame\config.json'
+with open('select_the_path') as f: #'.\Esame\config.json'
   config = json.load(f)
 config['pend']['state0'] = [float(st_vl) for st_vl in config['pend']['state0']]
 

@@ -6,7 +6,7 @@ Created on Tue Nov 10 19:50:53 2020
 """
 import numpy as np
 from PendulumSimulation import PendulumSimulation
-# from Esame.PendulumSimulation import PendulumSimulation
+#from Esame.PendulumSimulation import PendulumSimulation
 
 def test_init():
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)

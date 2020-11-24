@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pylab as plt
 import matplotlib.animation as animation
 
+
 # class to create the animation
 class Animator:
     
