@@ -24,19 +24,20 @@ where
 ### Structure of the project
 These are the steps in order to start the program and get the animation:
 
-1) First the user has to choose the configurations he/she prefers, using the syntax of [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json);
-2) Then to make the simulation run the user has to FILE DOUBLEPEND
-3) At the end ...
+1) First the user has to choose the configurations for the simulation and the animation that he/she prefers, filling the [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) file;
+2) Then it's necessary to set the path to the config file in [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py). Here it's possible to find an example of how to use the code.
 
 This is how I divided my project into blocks:
 
-- In the file [PendulumSimulation](https://github.com/GiuliaPolverini/Esame/blob/master/PendulumSimulation.py) I have initialized some parameters as the initial state of the system and the time, solved the differential equations for the system thanks to the odeint package and got the cartesian coordinates for each position; in the last part I tested ....
+- In the file [PendulumSimulation](https://github.com/GiuliaPolverini/Esame/blob/master/PendulumSimulation.py) I have initialized some parameters as the initial state of the system and the time, solved the differential equations for the system thanks to the odeint package and got the cartesian coordinates for each position.
 
 - In the file [Animator](https://github.com/GiuliaPolverini/Esame/blob/master/Animator.py) I have set the length of time for the simulation, the size of the animation window and of the plot and how the text window has to evolve; then I have built the line of the pendulum with its three points (the central pin and the two masses), inizializing their positions and the trace to draw the trajectory; at the end I created a cycle to iterate the frames and update the positions and the traces.
 
 - In the file [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) there are the parameters the user can vary according to how he/she wants them.
 
 - In the file [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py) first I have brought out the values I needed from the [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) file to create the system; then I have given the comand to create the simulation and the animation.
+
+- In the file [Testing](https://github.com/GiuliaPolverini/Esame/blob/master/Testing.py) I have tested some functions to ensure that they work properly. There are not many functions to test in this case because most of them are grafical function.
 
 This is how the animation looks like after 9,72 seconds:
 ![ScreenShot](Screenshot.png)
