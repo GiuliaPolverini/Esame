@@ -13,7 +13,7 @@ def test_init():
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=2)
 
-def test_trivial_evolution():
+def test_down_pendulum():
     #test for evolution of the pendulum in its equilibrium position
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)
     pend_sim.simulate()
@@ -21,6 +21,23 @@ def test_trivial_evolution():
     l = pend_sim.l
     for cor, val in zip([pend_sim.x1, pend_sim.y1, pend_sim.x2, pend_sim.y2],(0,-l, 0, -2*l)):
         assert np.unique(cor) == np.array([val])
+
+def test_up_pendulum():
+    #test for evolution of the pendulum in its equilibrium position
+    pend_sim = PendulumSimulation(state0 = (np.pi,np.pi,0,0), time_end=20, exp_time_sampling=13)
+    pend_sim.simulate()
+    assert np.unique(np.around(pend_sim.integrate[0:1000,2:4], 5 )) == np.array([0])
+
+def test_fold_pendulum_1():
+    #test for evolution of the pendulum in its equilibrium position
+    pend_sim = PendulumSimulation(state0 = (0,np.pi,0,0), time_end=20, exp_time_sampling=13)
+    pend_sim.simulate()
+    assert np.unique(np.around(pend_sim.integrate[0:1000,2:4], 5 )) == np.array([0])
+
+def test_fold_pendulum_2():
+    pend_sim = PendulumSimulation(state0 = (np.pi,0,0,0), time_end=20, exp_time_sampling=13)
+    pend_sim.simulate()
+    assert np.unique(np.around(pend_sim.integrate[0:1000,2:4], 5 )) == np.array([0])
 
 def test_simulate():
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)
@@ -33,7 +50,7 @@ def test_simulate():
 
 def test_cartesian_traj():
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
-    
-    for lenght in [200, 300, 0]:
+
+    for lenght in np.random.randint(low=0, high=10_000, size=50):
         integrate = np.ones((lenght,4))
         assert integrate.shape ==  np.asarray(pend_sim.cartesian_traj(integrate)).T.shape

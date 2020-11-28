@@ -1,12 +1,12 @@
 {"pend":
     {"time_end": 40,
-    "state0": ["3.14", "1.57", "0.0", "0.0"],
-    "exp_time_sampling": 11,
+    "state0": ["3.14159265358", "1.57079632679", "0.0", "0.0"],
+    "exp_time_sampling":11,
     "l": 1
     },
 
 "anim":
     {"draw_trace": 1,
-    "n_frames": 1000
+     "n_frames" : 1000
     }
 }

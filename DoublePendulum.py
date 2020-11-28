@@ -29,5 +29,3 @@ anim = Animator(pend_sim, **config['anim'])
 anim.animate()
 
 plt.show()
-
-plt.show()
