@@ -25,7 +25,7 @@ where
 These are the steps in order to start the program and get the animation:
 
 1) First the user has to choose the configurations for the simulation and the animation that he/she prefers, filling the [config](https://github.com/GiuliaPolverini/Esame/blob/master/config.json) file;
-2) Then it's necessary to set the path to the config file in [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py). Here it's possible to find an example of how to use the code.
+2) Then to make the simulation run the user has to use the file [DoublePendulum](https://github.com/GiuliaPolverini/Esame/blob/master/DoublePendulum.py). Here it's possible to find an example of how to use the code.
 
 This is how I divided my project into blocks:
 
