@@ -10,7 +10,7 @@ from PendulumSimulation import PendulumSimulation
 
 def test_init():
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1)
-    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=10000)
+    pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=1000)
     pend_sim = PendulumSimulation(state0 = (0,0,0,0), time_end=2)
 
 def test_down_pendulum():
