@@ -7,10 +7,10 @@ Created on Thu Oct 29 11:56:19 2020
 import matplotlib.pylab as plt
 import json
 
-from Animator import Animator
-from PendulumSimulation import PendulumSimulation
 # from Esame.Animator import Animator
 # from Esame.PendulumSimulation import PendulumSimulation
+from Animator import Animator
+from PendulumSimulation import PendulumSimulation
 
 #%%----------------------------------------------------------------------------
 
