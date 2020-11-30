@@ -40,24 +40,27 @@ class Animator:
             self.x2 = pend_simulation.x2
             self.y2 = pend_simulation.y2
 
-            # tracing the second mass' phase space for θ and p
+            # tracing the mass' phase space
             self.theta1 = pend_simulation.integrate[:,1]
             self.p1 = pend_simulation.integrate[:,3]
             self.theta2 = pend_simulation.integrate[:,1]
             self.p2 = pend_simulation.integrate[:,3]
 
-        if (n_frames == -1) or (n_frames > self.x1.shape[0]):
-            self.n_frames = self.x1.shape[0]
+        # not allowed n_frames or greater than the n° I can produce 
+        if (n_frames < 0) or (n_frames > self.x1.shape[0]):
+            self.n_frames = self.x1.shape[0] #n°of points in the trajectory
         else: self.n_frames = n_frames
 
         l = pend_simulation.l
 
-        self.fig, (self.ax1, self.ax2) = plt.subplots(1,2, figsize = (8,16))
+        self.fig, (self.ax1, self.ax2) = plt.subplots(1, 2, figsize = (8,16))
 
         #PLOT for cartesin trajectory
         self.ax1.set_title('Cartesian Space', fontsize=10)
         #self.ax1.set_xlabel('x', fontsize=5)
         #self.ax1.set_ylabel('y', fontsize=5)
+        
+        #limits for the trajectory in the cartesian space
         self.ax1.set_xlim(left=-2.1*l, right=2.1*l)
         self.ax1.set_ylim(bottom=-2.1*l, top=2.1*l)
 
@@ -66,15 +69,16 @@ class Animator:
 
         theta1_min = np.min(self.theta1)
         if theta1_min > -np.pi: theta1_min = -np.pi
-        else: theta1_min = np.floor(theta1_min/np.pi)*np.pi
+        else: theta1_min = np.floor(theta1_min/np.pi)*np.pi #round up
 
         theta1_max = np.max(self.theta1)
         if theta1_max < np.pi: theta1_max = np.pi
-        else: theta1_max = np.ceil(theta1_max/np.pi)*np.pi
+        else: theta1_max = np.ceil(theta1_max/np.pi)*np.pi #round up
 
         p1_min = np.min(self.p1)
         p1_max = np.max(self.p1)
         
+        #check if the draw is not over the borders
         if np.isclose(p1_min, p1_max, rtol=1e-05, atol=1e-08):
             p1_min = p1_min - np.abs(p1_min)/2
             p1_max = p1_max + np.abs(p1_max)/2
@@ -115,9 +119,10 @@ class Animator:
                                    [0.0, self.y1[0], self.y2[0]],
                                    marker = 'o')
 
-        self.dot, = self.ax2.plot([self.theta1[0], self.p1[0]],
+        # dots of the masses in the phase space
+        self.dot, = self.ax2.plot([self.theta1[0], self.p1[0]], 
                                   [self.theta2[0], self.p2[0]],
-                                   marker = 'o')
+                                  marker = 'o')
 
         # trace the whole trajectory of both the masses
         if self.draw_trace:
